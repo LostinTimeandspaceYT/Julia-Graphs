@@ -126,34 +126,13 @@ function histogram_table_create(state, fname)
   Label(f[0, 1], title, justification = :center)
   Label(f[0, 2], subtitle, justification = :center)
   dp1 = filter(:Signal=> ==("point_1"), state)
-  # dp2 = filter(:Signal=> ==("point_2"), state)
-  # dp3 = filter(:Signal=> ==("point_3"), state)
-  # dp4 = filter(:Signal=> ==("point_4"), state)
   num_bins = 50
 
   # The following demonstrates how to create a log file from histogram data.
-
   # stats = string()
-  # stats *= "========  STATS 1 ========\r\n"
+  # stats *= "======== STATS ========\r\n"
   # dp1_points = @capture_out begin describe(dp1[!, 3]) end;
   # stats *= (dp1_points * "\r\n")
-
-  # stats *= "======== STATS 2 ========\r\n"
-  # dp2_points =  @capture_out begin describe(dp2[!, 3]) end;
-  # stats *= (dp2_points * "\r\n")
-  
-  # stats *= "========  STATS 3 ========\r\n"
-  # dp3_points = @capture_out begin describe(dp3[!, 3]) end;
-  # stats *= (dp3_points * "\r\n")
-
-  # stats *= "========  STATS 4 ========\r\n"
-  # dp4_points = @capture_out begin describe(dp4[!, 3]) end;
-  # stats *= (dp4_points * "\r\n")
-  
-  # fpath = fname * ".txt" # Change this variable if needed
-  # open(fpath, "a", lock=true) do f
-  #   write(f, stats)
-  # end
 
   # histogram for dp1_points
   f[1, 1] = Axis(f, title = "Data Set 1", xlabel = "X Axis", ylabel = "Y Axis")
@@ -165,7 +144,6 @@ function histogram_table_create(state, fname)
   strokewidth = 0.5, strokecolor = (:black, 0.5), color = :values,
   bins = num_bins, 
   )
-
   # Repeat the above for each data point.
 
   f # May not need to call this
@@ -179,18 +157,5 @@ results = "my_data.csv"
 df = DataFrame(CSV.File(results))
 sort!(df, [order(:Col1), order(:Col2), order(:Col3)])
 
-# Hi-PWR ON | Enable ON
 state_1 = filter(:Col1=> ==(1), df)
-create_histogram_table(state_1, "hi_pwr_on_enable_on_hist")
-
-# Hi-PWR OFF | Enable ON
-state_2 = filter(:State=> ==(2), df)
-create_histogram_table(state_2, "hi_pwr_off_enable_on_hist")
-
-# Hi-PWR OFF | Enable OFF
-state_3 = filter(:State=> ==(3), df)
-create_histogram_table(state_3, "hi_pwr_off_enable_off_hist")
-
-# Hi-PWR ON | Enable OFF
-state_4 = filter(:State=> ==(4), df)
-create_histogram_table(state_4, "hi_pwr_on_enable_off_hist")
+create_histogram_table(state_1, "My Data Histogram")
